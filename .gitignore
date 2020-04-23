@@ -1,5 +1,7 @@
 /img
 composer.json
-curia.html
+curia.php
 site2.php
 /.idea
+/vendor
+/file_for

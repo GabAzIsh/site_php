@@ -1,0 +1,45 @@
+try{window.admediatorssp3.block("54961-364445").display({ 
+dt: {
+    r : {
+        g1 : 70,
+        g5 : 30
+    },
+    gid: {"g1":14356,"g5":14766},
+    rl : {
+        g5 : 35,
+        g7 : 35
+    },
+    g : {
+        g1 : [
+            {0: "padf", ownerId: 271654,params: {pp:'qxx',ps:'dgez',p2:'fwxo'}, use_iframe: 0, reload: 0, w: 970, h: 250, bidders: {"btw":"3147680"}, 3: "970", 4: "250"}
+        ],
+        g5 : [
+            ["py", "R-A-393085-6", "970", "250"]
+        ]
+    },
+    s: {"align":"center","innerWrapperSize":"0x0","outerWrapperSize":"0x0"},
+    w: 1,
+    site: "litmir.me"
+},
+mob: {
+    r : {
+        g3 : 70,
+        g7 : 30
+    },
+    gid: {"g3":14359,"g7":14768},    
+    rl : {
+        g5 : 35,
+        g7 : 35
+    },
+    g : {
+        g3 : [
+            {0: "padf", ownerId: 271654,params: {pp:'njk',ps:'dgez',p2:'fwxo'}, use_iframe: 0, reload: 0, w: 320, h: 100, 3: "336", 4: "300"}
+        ],
+        g7 : [
+            ["py", "R-A-393085-7", "336", "300"]
+        ]
+    },
+    s: {"align":"center","innerWrapperSize":"0x0","outerWrapperSize":"0x0"},
+    site: "litmir.me"    
+}
+})}catch(p){}
