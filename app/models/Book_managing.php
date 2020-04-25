@@ -63,29 +63,39 @@ class Book_managing
         $this->flag=-1;
     }
 
-    function read(array $options=[]) {
+    private function construct_filter(array $options){
         $string = array("author"=>"authors.author_name = '", "genre"=>"genres.genre_name = '", "name"=>"MATCH(name, description) AGAINST( '"); // the order in the string is the order of the filters in the SQL query
         foreach ($string as $filter_name=>$value){
-            $string[$filter_name] = (!empty($options[$filter_name])) ? $string[$filter_name].$options[$filter_name].'\'' : ""; // Building a full filter (with concatenation with the end of expressions [sql string + ' ] for all existing filters)
+            $array_of_element = array_filter($options,function($var) use($filter_name) {return(explode('_', $var)[0]==$filter_name);}, ARRAY_FILTER_USE_KEY);
+            $value_of_element = join('\' OR '.$value, $array_of_element);
+            $string[$filter_name] = (!empty($value_of_element)) ? $string[$filter_name].$value_of_element.'\'' : ""; // Building a full filter (with concatenation with the end of expressions [sql string + ' ] for all existing filters)
         }
         $string = array_filter($string);
-        $string = (!empty($string)) ? " WHERE ".join(" AND ",$string) : "";
-        if (isset($options['name'])){ $string .= ') ';} // Extra substring for cases when there is a (name, description) search
+        $string = (!empty($string)) ? " WHERE ".join(" OR ",$string) : "";
+        if (isset($options['name'])){ $string .= ' IN BOOLEAN MODE) ';} // Extra substring for cases when there is a (name, description) search
+        return $string;
+    }
+
+    function read(array $options) {
+        $string = $this->construct_filter($options);
         $sql =
             "SELECT books.name AS title, 
             books.description AS description, 
             books.img AS cover_img_ref, 
             GROUP_CONCAT(DISTINCT genres.genre_name) AS genre, 
             GROUP_CONCAT(DISTINCT authors.author_name) AS author
+            ".(isset($options['name'])? ', MATCH(name, description) AGAINST( \''.$options['name'].' \' IN BOOLEAN MODE) AS rel ' :'')."
             FROM books 
             JOIN genre_book ON books.book_id = genre_book.book_id 
             JOIN genres ON genres.genre_id = genre_book.genre_id 
             JOIN author_book ON books.book_id = author_book.book_id 
             JOIN authors ON authors.author_id = author_book.author_id 
-            ".$string."
-            GROUP BY books.book_id;";
+            ".$string." GROUP BY books.book_id 
+            ".(isset($options['name'])? " ORDER BY rel DESC":'')."
+            LIMIT ".($options['paginator']?? 10).(" OFFSET ".$options['offset'].';'?? '0;');
+//        echo $sql;
         $result = $this->conn->query($sql);
-        $this->flag = $result->num_rows;
+        $this->flag = $result->num_rows?? 0;
         $this->result = $result;
         $this->read_generator = $this->results();
     }
@@ -146,4 +156,3 @@ class Book_managing
 }
 
 ?>
-

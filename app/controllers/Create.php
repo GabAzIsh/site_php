@@ -106,8 +106,6 @@ class Create
 
                 $name = $this->get_element('name', $reg_exp_array, $html);
                 $description = $this->get_element('description', $reg_exp_array, $html);
-//                echo $name;
-//                echo $description;
                 // Record to the database
                 $book_list->creation($name, $img_ref, $description, $genres, $authors);
             }

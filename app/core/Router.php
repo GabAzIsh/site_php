@@ -24,8 +24,6 @@ private function getURI(){
 public function run()
 {// Получить
     $uri = $this->getURI();
-//    print_r($_SERVER);
-//    print_r($_GET);
 foreach($this->routes as $route){
 
     if (preg_match("~$route[0]~", $uri)){
