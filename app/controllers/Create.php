@@ -80,6 +80,7 @@ class Create
             // Prepare
             $this->FLAG = isset($_POST['FLAG']) ? 1:0; // SET 1 to read from the file "/file_for/LItMIr.htm", ELSE the URL web page will be read
             $this->URL = !empty($_POST['url_name']) ? $_POST['url_name']: 'https://www.litmir.me/bs';
+            $this->URL .= (isset($_POST['quantity']) ? '?o='.$_POST['quantity'].'': '');
             $book_list = new \side\app\models\Book_managing($_dbname = "test_books");
             $this->truncate($book_list);
             $reg_exp_array = array(
@@ -113,7 +114,7 @@ class Create
         }  else {
             $this->FLAG = isset($_GET['FLAG']) ? 1:0;
         }
-        require_once 'app/views/create_html.php';
+        require_once 'app/views/create_view.php';
         return true;
     }
 }
