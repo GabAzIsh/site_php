@@ -1,0 +1,19 @@
+{
+    "name": "site/smd",
+    "description": "experience",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "php"       :  ">=7.3",
+        "ext-json"  :  "*",
+        "ext-curl"  :  "*",
+        "ext-mysqli":  "*",
+        "wamania/php-stemmer": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "side\\": ""
+        }
+    }
+}
